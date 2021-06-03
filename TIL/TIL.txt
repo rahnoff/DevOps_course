@@ -1,2 +1,3 @@
 - Found out new recipe for porridge
 - Found out why TeamCity fits well for C3 projects
+- Learned about Unicode emoji representation in Python
