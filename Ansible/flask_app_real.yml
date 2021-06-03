@@ -1,0 +1,16 @@
+---
+- hosts: devops
+  become_method: sudo
+  #become_user: wl
+  become: yes
+
+  vars_files:           
+          - vars/vars.yml
+
+
+  roles: 
+          - ssh_config
+          - firewall_config
+          - flaskpy
+          - systemd_config
+          - nginx_config

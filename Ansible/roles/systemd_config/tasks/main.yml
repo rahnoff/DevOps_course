@@ -1,0 +1,72 @@
+---
+- name: Create a service file in /etc/systemd/system
+  file: dest=/etc/systemd/system/flask_app_service.service state=touch
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: '[Unit]'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: 'Description=Flask App Service'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: 'After=network.target'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: '[Service]'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: 'User=root'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: 'WorkingDirectory=/usr/local/opt/flask_app/flask_dir'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: 'ExecStart=/usr/local/opt/flask_app/flask_dir/flask_app_src.py'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: 'Restart=always'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: '[Install]'
+    state: present
+
+- name: Edit service file
+  lineinfile:
+    dest: /etc/systemd/system/flask_app_service.service
+    line: 'WantedBy=multi-user.target'
+    state: present
+
+- name: Reload systemctl
+  shell: systemctl daemon-reload
+
+- name: Start service
+  shell: systemctl start flask_app_service.service
+
+- name: Enable service
+  shell: systemctl enable flask_app_service.service

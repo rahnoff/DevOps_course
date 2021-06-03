@@ -1,0 +1,25 @@
+---
+- name: Install ufw
+  apt:
+   name:
+    - ufw
+   state: present
+
+- name: Configure open ports with ufw
+  ufw:
+          rule: "{{ item.rule }}"
+          port: "{{ item.port }}"
+          proto: "{{ item.proto }}"
+  with_items:
+          - { rule: 'allow', port: 22, proto: 'tcp' }
+          - { rule: 'allow', port: 8080, proto: 'tcp' }
+          - { rule: 'allow', port: 443, proto: 'tcp' }
+
+- name: Configure default incoming/outgoing rules with ufw
+  ufw:
+          direction: "{{ item.direction }}"
+          policy: "{{ item.policy }}"
+          state: enabled
+  with_items:
+          - { direction: outgoing, policy: allow }
+          - { direction: incoming, policy: allow }

@@ -1,0 +1,154 @@
+---
+- name: Install nginx
+  apt:
+   name:
+    - nginx
+   state: present
+
+- name: Copy self-signed key file
+  copy: "src=nginx-selfsigned.key dest=/etc/ssl/private"
+
+- name: Copy self-signed cert file
+  copy: "src=nginx-selfsigned.crt dest=/etc/ssl/certs"
+
+- name: Make a file in nginx snippets dir
+  file: dest=/etc/nginx/snippets/self-signed.conf state=touch
+
+- name: Edit snippets file
+  lineinfile:
+    dest: /etc/nginx/snippets/self-signed.conf
+    line: 'ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;'
+    state: present
+
+- name: Edit snippets file
+  lineinfile:
+    dest: /etc/nginx/snippets/self-signed.conf
+    line: 'ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;'
+    state: present
+
+- name: Back up current nginx default file
+  shell: cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+
+- name: Remove current nginx default file
+  file: dest=/etc/nginx/sites-available/default state=absent
+
+- name: Make an empty nginx default file
+  file: dest=/etc/nginx/sites-available/default state=touch
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'server {'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'listen 443 ssl;'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'listen [::]:443 ssl;'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'include snippets/self-signed.conf;'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: ' '
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'server_name example.com www.example.com;'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'location / {'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'include /etc/nginx/proxy_params;'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'proxy_pass http://localhost:8080;'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'proxy_read_timeout 90s;'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'proxy_redirect http://localhost:8080 example;'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: '}'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'location /emoji {'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'include /etc/nginx/proxy_params; #identity'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'proxy_pass http://localhost:8080; #identity'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'proxy_read_timeout 90s; #identity'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: 'proxy_redirect http://localhost:8080 example; #identity'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: '} #identity'
+    state: present
+
+- name: Edit nginx default file
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: '} #second_identity'
+    state: present
+
+- name: Restart nginx
+  shell: systemctl restart nginx
+                  

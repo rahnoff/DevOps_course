@@ -1,0 +1,22 @@
+---
+- name: Add user to sudoers
+  lineinfile:
+          dest: /etc/sudoers
+          regexp: '^wl'
+          line: 'wl ALL=(ALL) NOPASSWD: ALL'
+          state: present
+
+- name: Configure ssh_config
+  lineinfile:
+          dest: /etc/ssh/ssh_config
+          regexp: "{{ item.regexp }}"
+          line: "{{ item.line }}"
+          state: present
+  with_items:
+    - regexp: "^PasswordAuthentication"
+      line: "PasswordAuthentication no"
+    - regexp: "^PermitRootLogin"
+      line: "PermitRootLogin no"
+
+- name: Restart ssh
+  shell: systemctl reload ssh
