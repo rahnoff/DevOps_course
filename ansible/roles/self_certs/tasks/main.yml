@@ -1,10 +1,22 @@
 ---
 
+- name: Make python3 default
+  shell: "update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1"
+
+- name: Make python3 default
+  shell: "update-alternatives --install /usr/bin/python python /usr/bin/python3.7 2"
+
+- name: Upgrade pip3
+  shell: pip3 install --upgrade pip
+
 - name: Install dependency for pyopenssl
   apt: name=libssl-dev state=present
 
-- name: Install pyopenssl
-  shell: python3 -m pip install pyopenssl
+  #- name: Install pyopenssl
+  #shell: python3 -m pip install pyopenssl
+
+- name: Install pyopenssl via pip
+  shell: pip3 install pyopenssl
 
 - name: Ensure directory exists for local self-signed TLS certs
   file:

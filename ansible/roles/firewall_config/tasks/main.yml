@@ -22,4 +22,4 @@
           state: enabled
   with_items:
           - { direction: outgoing, policy: allow }
-          - { direction: incoming, policy: allow }
+          - { direction: incoming, policy: deny }

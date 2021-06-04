@@ -25,4 +25,4 @@ def create_emoji():
     return (((emoji_output + " " + "says" + " " + emoji_input_second + "\n") * emoji_count) + "Made with" + " " + emoji_in_signature + "  " + "by Ramzes" + "\n")
 
 if __name__ == '__main__':
-    app.run(port=8000, host='0.0.0.0')
+    app.run(port=8080, host='0.0.0.0')
