@@ -2,3 +2,4 @@
 - Found out why TeamCity fits well for C3 projects
 - Learned about Unicode emoji representation in Python
 - Fixed openssl module in Ansible
+- Learned how to use template files in Ansible
