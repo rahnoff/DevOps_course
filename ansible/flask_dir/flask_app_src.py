@@ -16,7 +16,7 @@ def create_emoji():
     delimeter_one = ':'
     delimeter_two = ':'
     request_data = request.get_json()
-    emoji_input = request_data['word']
+    emoji_input = request_data['animal']
     emoji_input_formatted = delimeter_one + emoji_input + delimeter_two
     emoji_output = emoji.emojize(emoji_input_formatted)
     emoji_input_second = request_data['sound']
