@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def hello():
-    return 'Hello Flask'
+    return ("Hello Flask" + "\n")
     
 
 @app.route('/emoji', methods=['POST'])
