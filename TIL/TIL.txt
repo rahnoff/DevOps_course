@@ -3,3 +3,4 @@
 - Learned about Unicode emoji representation in Python
 - Fixed openssl module in Ansible
 - Learned how to use template files in Ansible
+- Learned a bit about classes in Python
