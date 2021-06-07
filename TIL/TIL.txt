@@ -1,6 +1,7 @@
 - Found out new recipe for porridge
 - Found out why TeamCity fits well for C3 projects
 - Learned about Unicode emoji representation in Python
-- Fixed openssl module in Ansible
+- Learned how to use openssl module in Ansible properly
 - Learned how to use template files in Ansible
 - Learned a bit about classes in Python
+- Learned about string methods in Python
