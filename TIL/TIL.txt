@@ -5,3 +5,4 @@
 - Learned how to use template files in Ansible
 - Learned a bit about classes in Python
 - Learned about string methods in Python
+- Learned a bit about pull mode in Ansible
