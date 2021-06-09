@@ -6,3 +6,4 @@
 - Learned a bit about classes in Python
 - Learned about string methods in Python
 - Learned a bit about pull mode in Ansible
+- Finally discovered how Telegram bots are developed
