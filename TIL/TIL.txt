@@ -7,3 +7,4 @@
 - Learned about string methods in Python
 - Learned a bit about pull mode in Ansible
 - Finally discovered how Telegram bots are developed
+- How to use socket statistics to determine open ports
