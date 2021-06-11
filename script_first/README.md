@@ -1,6 +1,7 @@
 ## Network script<br />
 Shows connections established by a process on the local host<br />
-The script requires one argument, if it isn't provided terminates with error and usage example<br />
+The script requires three arguments, if them aren't provided terminates with an error and usage example<br />
+It uses netstat or ss depending which one is installed<br />
 The first command is `netstat` with `-tunapl` options, which is used to display socket statistics,  options:<br />
 `-t` - show TCP sockets<br />
 `-u` - show UDP sockets<br />
