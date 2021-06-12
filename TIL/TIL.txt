@@ -9,3 +9,4 @@
 - Finally discovered how Telegram bots are developed
 - How to use socket statistics to determine open ports
 - How to print specific lines in sed
+- How to count lines in awk
