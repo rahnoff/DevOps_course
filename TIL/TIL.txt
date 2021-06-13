@@ -10,3 +10,4 @@
 - How to use socket statistics to determine open ports
 - How to print specific lines in sed
 - How to count lines in awk
+- How to use local variables in bash scripts

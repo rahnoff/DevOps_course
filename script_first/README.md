@@ -1,40 +1,39 @@
 ## Network script<br />
-The first command is `netstat` with `-tunapl` options, which is used to display socket statistics,  options:<br />
+
+Shows connections established by a process on the local host<br />
+The script requires three args, if them aren't specified, terminates with an error and usage example<br />
+It uses `netstat` or `ss` depending on which one is installed<br />
+The first command makes the script executable regardless of user privilegies<br />
+The third arg is checked for a connection state, then the internal script variable is used for representing a state, for ESTABLISHED state script's output's two parts: the first one includes count of connections per organization and the second one's organization name with IP adresses range, also number of organizations' connections to be printed is controlled by the second script arg<br />
+`ss` and `netstat`, which are used to display socket statistics, use almost same options:<br />
 `-t` - show TCP sockets<br />
 `-u` - show UDP sockets<br />
 `-n` - show numbers instead of names for interfaces and ports<br />
 `-a` - show listening and established sockets<br />
 `-p` - show the process using the sockets<br />
 `-l` - show only listening sockets<br />
-The output of command:<br />
-**Proto** - means protocol<br />
-**Recv-Q, Send-Q** - received and sent data correspondingly<br />
-**Local Address** - on which port and IP address the process is listening on, **0.0.0.0** stands for all network interfaces for IPv4, **:::** same for IPv6, **\*** for all ports<br />
-**Foreign Address** - from which address and port connection is established<br />
-**State** - **LISTEN** means the process is waiting, **ESTABLISHED** the process is processing input, UDP protocol doesn't have any state<br />
-**PID/Program name** - PID of a process and its name<br />
 
-`awk` - the tabular data manipulation tool, `/firefox/` - match only lines with firefox word, `{print $5}` - print the fifth column
+`awk` - the tabular data manipulation tool, `-v pid="$1" -v state="$STATE" '$0~pid {if(field_depends_on_ss_or_netstar == state) print different_field_depending_on_ss_or_netstat}'` - matches only lines with a specified process and state and prints different fields<br />
 
-`cut` - extracts a sections of text from a line, `-d':'` - delimeter is used for colon separating pattern in this case, `-f1` - print the first part of the string separated by colon 
+`cut` - extracts a sections of text from a line, `-d':'` - delimeter is used for colon separating pattern in this case, `-f1` - print the first part of the string separated by colon<br />
 
-`sort` - sorts the contents of standart input and sends the results to standart output
+`sort` - sorts the contents of standart input and sends the results to standart output<br />
 
-`uniq` - removes any duplicate lines from a sorted file or standart input and sends the results to standart output, often used with sort, `-c` - lines will be preceeded by the number of times the line occurs
+`uniq` - removes any duplicate lines from a sorted file or standart input and sends the results to standart output, often used with sort, `-c` - lines will be preceeded by the number of times the line occurs<br />
 
-`tail` - prints the last 10 lines from the file or standart input, `-n 5` option - print only 5 last lines
+`tail` - prints the last 10 lines from the file or standart input, `-n 5` option - prints only last 5 lines<br />
 
 `grep` - general regular expression parser - searches text files for text matching a specified regular expression and outputs any line containing a match, options:<br />
 `-o` is used for printing only matched text<br />
 `-P` means Perl-compatible expression<br />
 `(\d+\.)` - `\d` - text should start with a number in 0-9 range, `+` means one or more matches of the preceeding element, `\.` - backslash as an escaping char for point, point itself means any char<br />
 `()` - parenthesis for integration three matches into one<br />
-`{3}` - match the preceeding element three times
+`{3}` - match the preceeding element three times<br />
 
-`while condition; do list; done` - while loop, commands in a list will be executed until condition is false
+`while **condition**; do **list_of_commands**; done` - while loop, commands in a **list_of_commands** will be executed until condition is false<br />
 
-`read variable` - is used to read a single line of standart input or a line of data from a file, assigns fields from standart input to the specified variable, in this case one variable will contain all input
+`read **variable**` - is used to read a single line of standart input or a line of data from a file, assigns fields from standart input to the specified variable, in this case one variable will contain all input<br />
 
-`whois` - determine which organisation owns the range of IP addresses
+`whois` - determines which organization owns the range of IP addresses
 
-`-F':'` option in awk means field separator, in this case colon, `/^Organization/` - print the line which starts with Organization word, `{print $2}` - print the second part after colon
+`-F':'` option in awk means field separator, in this case colon, `/^Organization/` - prints the line which starts with Organization word, `{print $2}` - prints the second part after colon

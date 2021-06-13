@@ -4,7 +4,7 @@ E_NOARGS=75
 if [ "$#" -lt 3 ]
 then
 	echo "Usage: `basename $0` firefox 2 E or `basename $0` 5000 5 L"
-	echo -e "firefox - process name, 5000 - PID, 2 - how many lines of output should be printed,\nE - ESTABLISHED state, L- LISTEN one, any other letter, for example A, is considered as all states"
+	echo -e "firefox - process name, 5000 - PID, 2 - how many connections should be printed,\nE - ESTABLISHED state, L- LISTEN one, any other letter, for example A, is considered as all states"
 	exit $E_NOARGS
 fi
 
@@ -92,8 +92,8 @@ fi)
 
 if [ "$3" == "E" ]
 then
-	#STATE2="$3"
-        OUTPUT2=$(sudo netstat -tunapl &> /dev/null
+        OUTPUT2=$(
+	sudo netstat -tunapl &> /dev/null
 	if [ "$?" != 0 ]
         then
 		STATE2="ESTAB"
