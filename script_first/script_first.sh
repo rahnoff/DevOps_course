@@ -4,7 +4,7 @@ E_NOARGS=75
 if [ "$#" -lt 3 ]
 then
 	echo "Usage: `basename $0` firefox 2 E or `basename $0` 5000 5 L"
-	echo -e "firefox - process name, 5000 - PID, 2 - how many lines of output should be printed,\nE is for ESTABLISHED state, L is for LISTEN one, any other letter is considered as all states"
+	echo -e "firefox - process name, 5000 - PID, 2 - how many lines of output should be printed,\nE - ESTABLISHED state, L- LISTEN one, any other letter, for example A, is considered as all states"
 	exit $E_NOARGS
 fi
 
@@ -19,48 +19,12 @@ else
         sudo netstat -tunapl &> /dev/null
         if [ $? != 0 ]
         then
-	        #echo "netstat isn't installed, ss is used instead"
 	        sudo ss -tunap |
-	        awk -v pid="$1" '$0~pid { print $6 }' |
-	        cut -d: -f1 |
-		sort |
-	        uniq -c |
-	        sort |
-	        tail -n 5 |
-	        grep -oP '(\d+\.){3}\d+' |
-	        while read IP
-	        do
-		        whois $IP |
-		        if [ $? != 0 ]
-		        then
-			        echo "whois isn't installed"
-			        exit 1
-		        else
-			        awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}'
-		        fi
-	        done
-         else
+	        awk -v pid="$1" '$0~pid { print $2, $6 }'
+        else
 	        sudo netstat -tunapl |
-	        awk -v pid="$1" '$0~pid { print $5 }' |
-	        cut -d: -f1 |
-	        sort |
-	        uniq -c |
-	        sort |
- 	        tail -n 5 |
-	        grep -oP '(\d+\.){3}\d+' |
-	        while read IP
-	        do
-		        whois $IP |
-		        if [ $? != 0 ]
-		        then
-			        echo "whois isn't installed"
-			        exit 1
-		        else
-			        awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}'
-		        fi
-	        done
+	        awk -v pid="$1" '$0~pid { print $5, $6 }'
 	fi
-	exit 0
 fi
 
 sudo netstat -tunapl &> /dev/null
@@ -69,7 +33,6 @@ then
 	if [ "$STATE" == "ESTABLISHED" ]
 	then
 		STATE="ESTAB"
-                #echo "netstat isn't installed, ss is used instead"
 	        sudo ss -tunap |
 	        awk -v pid="$1" -v state="$STATE" '$0~pid {if($2 == state) print $6}' |
 	        cut -d: -f1 |
@@ -86,14 +49,73 @@ then
 			        echo "whois isn't installed"
 			        exit 1
 		        else
-			        awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}'
+			        awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}' |
+				awk 'ORS=NR%2?" ":"\n"' |
+				awk '{count[$4]++} END {for (word in count) print word, count[word]}'
 		        fi
 	        done
 	elif [ "$STATE" == "LISTEN" ]
 	then
-                #echo "netstat isn't installed, ss is used instead"
  	        sudo ss -tunap |
-	        awk -v pid="$1" -v state="$STATE" '$0~pid {if($2 == state) print $6}' |
+	        awk -v pid="$1" -v state="$STATE" '$0~pid {if($2 == state) print $2, $6}'
+	fi
+else
+	if [ "$STATE" == "LISTEN" ]
+	then
+                sudo netstat -tunapl |
+	        awk -v pid="$1" -v state="$STATE" '$0~pid {if($6 == state) print $5, $6}'
+	else
+	        sudo netstat -tunapl |
+	        awk -v pid="$1" -v state="$STATE" '$0~pid {if($6 == state) print $5}' |
+	        cut -d: -f1 |
+	        sort |
+	        uniq -c |
+	        sort |
+ 	        tail -n 5 |
+	        grep -oP '(\d+\.){3}\d+' |
+	        while read IP
+	        do
+	 	        whois $IP |
+		        if [ $? != 0 ]
+		        then
+
+			        echo "whois isn't installed"
+			        exit 1
+		        else
+			        awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}' |
+                                awk 'ORS=NR%2?" ":"\n"' |
+				awk '{count[$4]++} END {for (word in count) print word, count[word]}'
+		        fi
+	        done
+	fi
+fi)
+
+if [ "$3" == "E" ]
+then
+	#STATE2="$3"
+        OUTPUT2=$(sudo netstat -tunapl &> /dev/null
+	if [ "$?" != 0 ]
+        then
+		STATE2="ESTAB"
+	        sudo ss -tunap |
+	        awk -v pid="$1" -v state="$STATE2" '$0~pid {if($2 == state) print $6}' |
+	        cut -d: -f1 |
+	        sort |
+	        uniq -c |
+	        sort |
+ 	        tail -n 5 |
+	        grep -oP '(\d+\.){3}\d+' |
+	        while read IP
+	        do
+		        whois $IP |
+			awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}' |
+		        awk 'ORS=NR%2?" ":"\n"' |
+			awk '{print $1,$2,$3,$4,$5,$6,$7}'
+	        done
+	else
+		STATE2="ESTABLISHED"
+                sudo netstat -tunapl |
+	        awk -v pid="$1" -v state="$STATE2" '$0~pid {if($6 == state) print $5}' |
 	        cut -d: -f1 |
 	        sort |
 	        uniq -c |
@@ -101,81 +123,35 @@ then
 	        tail -n 5 |
 	        grep -oP '(\d+\.){3}\d+' |
 	        while read IP
-                do
-		        whois $IP |
-		        if [ $? != 0 ]
-		        then
-			        echo "whois isn't installed"
-			        exit 1
-		        else
-			        awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}'
-		        fi
+	        do
+                        whois $IP |
+			awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}' |
+		        awk 'ORS=NR%2?" ":"\n"' |
+			awk '{print $1,$2,$3,$4,$5,$6,$7}'
 	        done
+	fi)
+fi
+
+if [ -z "$OUTPUT2" ]
+then
+	if [ -z "$OUTPUT" ]
+	then
+		echo "No such process or state"
+	else
+	        echo "$OUTPUT" |
+	        sed -n "1,$2p"
+	        exit "$?"
 	fi
 else
-	sudo netstat -tunapl |
-	awk -v pid="$1" -v state="$STATE" '$0~pid {if($6 == state) print $5}' |
-	cut -d: -f1 |
-	sort |
-	uniq -c |
-	sort |
-	tail -n 5 |
-	grep -oP '(\d+\.){3}\d+' |
-	while read IP
-	do
-		whois $IP |
-		if [ $? != 0 ]
-		then
-			echo "whois isn't installed"
-			exit 1
-		else
-			awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}'
-		fi
-	done
-fi)
-
-
-	#awk -v pid="$1" -v state="$3" '$0~pid {if($6 == state) print $5}' |
-        #cut -d: -f1 |
-        #sort |
-        #uniq -c |
-        #sort |
-        #tail -n 5 |
-        #grep -oP '(\d+\.){3}\d+' |
-        #while read IP
-        #do
-	        #whois $IP |
-	        #if [ $? != 0 ]
-		#then
-		 #       echo "whois isn't installed"
-		#	exit 1
-		#else
-		 #       awk -F':' '/^Organization/ {print $2}'
-		#	exit 0
-		#fi
-	#done)
-
-
-
-if [ -z "$OUTPUT" ]
-then
-	echo "No such state or whois can't determine an organization"
-	exit 1
-else
-	echo "$OUTPUT" |
-        awk 'ORS=NR%2?" ":"\n"' |
-	#sed -n "1,$2p" |
-	sort |
-	uniq -c
-        #sort |
-        #uniq -c |
-        #sort |
-        #awk -v output="$STATE" '{print $5, $6, $7, $8, " ", $2, $3, $4, output, " ", "number of connections", " ", $1}'
-        #head -n "$2"
+	if [ -z "$OUTPUT" ]
+	then
+		echo "No such process or state"
+	else
+	        echo "$OUTPUT" |
+	        sed -n "1,$2p"
+	        echo " "
+                echo "$OUTPUT2" |
+                sed -n "1,$2p"
+	        exit "$?"
+	fi
 fi
-#awk 'ORS=NR%2?" ":"\n"' |
-#sort |
-#uniq -c |
-#sort |
-#awk -v output="$STATE" '{print $5, $6, $7, $8, " ", $2, $3, $4, output, " ", "number of connections", " ", $1}'
-#tail -n "$2"
