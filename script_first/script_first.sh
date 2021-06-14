@@ -49,7 +49,7 @@ then
 			        echo "whois isn't installed"
 			        exit 1
 		        else
-			        awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}' |
+			        awk -F':' '/^Organization/ {print $2} /^NetRange/ {print $2}' |
 				awk 'ORS=NR%2?" ":"\n"' |
 				awk '{count[$4]++} END {for (word in count) print word, count[word]}'
 		        fi
@@ -82,7 +82,7 @@ else
 			        echo "whois isn't installed"
 			        exit 1
 		        else
-			        awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}' |
+			        awk -F':' '/^Organization/ {print $2} /^NetRange/ {print $2}' |
                                 awk 'ORS=NR%2?" ":"\n"' |
 				awk '{count[$4]++} END {for (word in count) print word, count[word]}'
 		        fi
@@ -108,7 +108,7 @@ then
 	        while read IP
 	        do
 		        whois $IP |
-			awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}' |
+			awk -F':' '/^Organization/ {print $2} /^NetRange/ {print $2}' |
 		        awk 'ORS=NR%2?" ":"\n"' |
 			awk '{print $1,$2,$3,$4,$5,$6,$7}'
 	        done
@@ -125,7 +125,7 @@ then
 	        while read IP
 	        do
                         whois $IP |
-			awk -F':' '/Organization/ {print $2} /NetRange/ {print $2}' |
+			awk -F':' '/^Organization/ {print $2} /^NetRange/ {print $2}' |
 		        awk 'ORS=NR%2?" ":"\n"' |
 			awk '{print $1,$2,$3,$4,$5,$6,$7}'
 	        done
@@ -143,15 +143,10 @@ then
 	        exit "$?"
 	fi
 else
-	if [ -z "$OUTPUT" ]
-	then
-		echo "No such process or state"
-	else
-	        echo "$OUTPUT" |
-	        sed -n "1,$2p"
-	        echo " "
-                echo "$OUTPUT2" |
-                sed -n "1,$2p"
-	        exit "$?"
-	fi
+	echo "$OUTPUT" |
+	sed -n "1,$2p"
+	echo " "
+        echo "$OUTPUT2" |
+        sed -n "1,$2p"
+	exit "$?"
 fi
