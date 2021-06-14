@@ -12,5 +12,6 @@
           - ssh_config
           - firewall_config
           - flaskpy
+          - self_certs
           - systemd_config
           - nginx_config

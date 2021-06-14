@@ -1,0 +1,41 @@
+---
+
+- name: Make python3 default
+  shell: "update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1"
+
+- name: Make python3 default
+  shell: "update-alternatives --install /usr/bin/python python /usr/bin/python3.7 2"
+
+- name: Upgrade pip3
+  shell: pip3 install --upgrade pip
+
+- name: Install dependency for pyopenssl
+  apt: name=libssl-dev state=present
+
+  #- name: Install pyopenssl
+  #shell: python3 -m pip install pyopenssl
+
+- name: Install pyopenssl via pip
+  shell: pip3 install pyopenssl
+
+- name: Ensure directory exists for local self-signed TLS certs
+  file:
+          path: "{{ certificate_dir }}/{{ server_hostname }}"
+          state: directory
+
+- name: Generate an OpenSSL private key
+  openssl_privatekey:
+          path: "{{ certificate_dir }}/{{ server_hostname }}/privkey.pem"
+
+- name: Generate an OpenSSL CSR
+  openssl_csr:
+          path: "{{ certificate_dir }}//{{ server_hostname }}.csr"
+          privatekey_path: "{{ certificate_dir }}/{{ server_hostname }}/privkey.pem"
+          common_name: "{{ server_hostname }}"
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+          path: "{{ certificate_dir }}/{{ server_hostname }}/fullchain.pem"
+          privatekey_path: "{{ certificate_dir }}/{{ server_hostname }}/privkey.pem"
+          csr_path: "{{ certificate_dir }}/{{ server_hostname }}.csr"
+          provider: selfsigned
