@@ -1,5 +1,5 @@
 - Found out new recipe for porridge
-- Found out why TeamCity fits well for C3 projects
+- Found out why TeamCity fits well for C# projects
 - Learned about Unicode emoji representation in Python
 - Learned how to use openssl module in Ansible properly
 - Learned how to use template files in Ansible
@@ -11,4 +11,8 @@
 - How to print specific lines in sed
 - How to count lines in awk
 - How to use local variables in bash scripts
+<<<<<<< HEAD
 - How i/o is implemented in Go
+=======
+- Go is used to interact with K8s
+>>>>>>> 881f140f02e5da6212a92fed2a88558c4df3484b
