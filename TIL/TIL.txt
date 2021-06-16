@@ -11,8 +11,5 @@
 - How to print specific lines in sed
 - How to count lines in awk
 - How to use local variables in bash scripts
-<<<<<<< HEAD
 - How i/o is implemented in Go
-=======
 - Go is used to interact with K8s
->>>>>>> 881f140f02e5da6212a92fed2a88558c4df3484b
