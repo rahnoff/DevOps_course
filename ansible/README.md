@@ -2,7 +2,7 @@
 
 Install Ansible by `sudo apt install ansible`
 
-In **/etc/hosts** add an IP address and name of the managed Ansible host, in **/etc/ansible/hosts** add a line of hosts group name, in this case **[devops]**, on the next line add name of the managed Ansible host<br />
+In **/etc/hosts** add an IP address and name of the managed Ansible host, in **/etc/ansible/hosts** add a line of hosts group name, in this case **[devops]**, on the next line add name of the managed Ansible host, also in **roles/ssh_config/tasks/main.yml** change user name to yours on the managed host<br />
 
 To use playbook make ssh pair of keys by typing `ssh-keygen` at Ansible host, then type `ssh-copy-id user_on_managed_host@name_of_managed_host`<br />
 

@@ -11,3 +11,4 @@
 - How to print specific lines in sed
 - How to count lines in awk
 - How to use local variables in bash scripts
+- How i/o is implemented in Go
