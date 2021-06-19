@@ -13,3 +13,6 @@
 - How to use local variables in bash scripts
 - How i/o is implemented in Go
 - Go is used to interact with K8s
+- Python built-in functions
+- What is a shared library
+- Learn a bit about pull requests
