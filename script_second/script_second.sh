@@ -46,7 +46,8 @@ CONTRIBUTORS_LABELS_PRS=$(curl https://api.github.com/repos/$GOVERNOR/$REPO_NAME
 jq -jr '.[] | "PR_state:", " ",.state, "\n","Contributor_name:", (.user|" ",.login), "\n", "Label:", (.head |" ",.label), "\n"' |
 awk 'ORS=NR%3?" ":"\n"' |
 grep "open" |
-awk '{print $4, ";", $5, $6}')
+awk '{print $4, ";", $5, $6}' |
+sort)
 
 echo "All open PRs with contributors and labels:"
 echo "$CONTRIBUTORS_LABELS_PRS"
