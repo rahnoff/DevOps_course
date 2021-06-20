@@ -12,9 +12,6 @@
 - name: Install dependency for pyopenssl
   apt: name=libssl-dev state=present
 
-  #- name: Install pyopenssl
-  #shell: python3 -m pip install pyopenssl
-
 - name: Install pyopenssl via pip
   shell: pip3 install pyopenssl
 
