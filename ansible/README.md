@@ -16,7 +16,7 @@ To use playbook make ssh pair of keys by typing `ssh-keygen` at Ansible host, th
 
 - **flaskpy** role is all about installing required python libs for Flask and configuring app on a remote host<br />
 
-- **firewall_config** role installs and configures ufw to allow only 22, 8080, 443 ports<br />
+- **firewall_config** role installs and configures ufw to allow only 22, 80, 443 ports<br />
 
 - **ssh_config** role adds the remote user to sudoers, disables root login and also disables password-based SSH authentication<br />
 

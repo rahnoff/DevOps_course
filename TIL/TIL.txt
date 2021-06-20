@@ -16,3 +16,4 @@
 - Python built-in functions
 - What is a shared library
 - Learn a bit about pull requests
+- How to merge a pull request
