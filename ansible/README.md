@@ -10,13 +10,13 @@ To use playbook make ssh pair of keys by typing `ssh-keygen` at Ansible host, th
 
 **flask_dir** is a source code folder<br />
 
-**template** folder is for Nginx config file with Jinja extension<br />
+**templates** folder is for Nginx config file with Jinja extension<br />
 
 **roles** folder contains:<br />
 
 - **flaskpy** role is all about installing required python libs for Flask and configuring app on a remote host<br />
 
-- **firewall_config** role installs and configures ufw to allow only 22, 80, 443 ports<br />
+- **firewall_config** role installs and configures ufw to allow only 22, 8080, 443 ports<br />
 
 - **ssh_config** role adds the remote user to sudoers, disables root login and also disables password-based SSH authentication<br />
 
@@ -40,9 +40,9 @@ To test app with POST method type: `curl -k -H "Content-Type: application/json" 
 `-d` option indicates the data to include in the body of the request, **elephant** is emoji, **animal** is a key for it, **whoaa** is what elephants say, **count** is for how many times emoji should appear<br />
 For GET method with Flask greetings type `curl -k https://name_of_managed_host/`<br />
 
-To run the playbook type: `ansible-playbook flask_app_real.yml --become --become-user=root --ask-become-pass`<br />
+To run the playbook type: `ansible-playbook main.yml --become --become-user=root --ask-become-pass`<br />
 `--ask-become-pass` option means the password is required<br />
 `--become` tells Ansible to become a different user<br />
 `--become-user=root` tells Ansible that user is root<br />
 
-There is a possibility playbook files contain sensitive data like passwords, to provide additional security Ansible can encrypt such files with `ansible-vault encrypt file_name.yml` command, it demands a password, enter it and file_name.yml will no longer contain YAML, instead there are numbers. Next time the playbook runs it will demand a password. The convenient way to run playbooks with encrypted files is to create a password file. Inside **.ansible** folder which should be in a folder where you run a playbook, if not make it, create **vault_pass.txt** file with your password, set permissions to 600 by typing `chmod 600 vault_pass.txt`. When run the playbook use `--vault-password-file .ansible/vault_pass.txt` option. I encrypted **vars/vars.yml** file. To run the playbook with an encrypted file type `ansible-playbook flask_app_real.yml --become --become-user=root --ask-become-pass --vault-password-file .ansible/vault_pass.txt`<br />
+There is a possibility playbook files contain sensitive data like passwords, to provide additional security Ansible can encrypt such files with `ansible-vault encrypt file_name.yml` command, it demands a password, enter it and file_name.yml will no longer contain YAML, instead there are numbers. Next time the playbook runs it will demand a password. The convenient way to run playbooks with encrypted files is to create a password file. Inside **.ansible** folder which should be in a folder where you run a playbook, if not make it, create **vault_pass.txt** file with your password, set permissions to 600 by typing `chmod 600 vault_pass.txt`. When run the playbook use `--vault-password-file .ansible/vault_pass.txt` option. I encrypted **vars/vars.yml** file. To run the playbook with an encrypted file type `ansible-playbook main.yml --become --become-user=root --ask-become-pass --vault-password-file .ansible/vault_pass.txt`<br />
