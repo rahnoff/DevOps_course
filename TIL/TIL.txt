@@ -18,3 +18,4 @@
 - Learn a bit about pull requests
 - How to merge a pull request
 - How to compile python file
+- How to delete trailing special characters in Go
