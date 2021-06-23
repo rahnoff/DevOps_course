@@ -18,7 +18,7 @@ To use playbook make ssh pair of keys by typing `ssh-keygen` at Ansible host, th
 
 - **firewall_config** role installs and configures ufw to allow only 22, 8080, 443 ports<br />
 
-- **ssh_config** role adds the remote user to sudoers, disables root login and also disables password-based SSH authentication<br />
+- **ssh_config** disables root login and password-based SSH authentication<br />
 
 - **systemd_config** role creates a unit to start the app at boot<br />
 

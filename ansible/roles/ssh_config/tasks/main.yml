@@ -1,11 +1,4 @@
 ---
-- name: Add user to sudoers
-  lineinfile:
-          dest: /etc/sudoers
-          regexp: '^wl'
-          line: 'wl ALL=(ALL) NOPASSWD: ALL'
-          state: present
-
 - name: Configure ssh_config
   lineinfile:
           dest: /etc/ssh/ssh_config
