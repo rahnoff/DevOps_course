@@ -20,3 +20,4 @@
 - How to compile python file
 - How to delete trailing special characters in Go
 - About regexps in Python
+- How to build a server in Python
