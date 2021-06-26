@@ -18,7 +18,7 @@ class WebServerHandler(http.server.BaseHTTPRequestHandler):
         #emoji_output = emoji.emojize(emoji_input_formatted)
         #emoji_input_second = data['sound']
         #emoji_count = int(data['count'])
-        emoji_in_signature = '\u2764\ufe0f'
+        emoji_in_signature = delimeter_one + "red_heart" + delimeter_two
         #result = emoji_output + emoji_input_second + emoji_in_signature
         #self.write(result)
         length = int(self.headers['Content-Length'])
@@ -30,10 +30,10 @@ class WebServerHandler(http.server.BaseHTTPRequestHandler):
         emoji_input = post_body_json['animal']
         emoji_input_formatted = delimeter_one + emoji_input + delimeter_two
         emoji_output = emoji.emojize(emoji_input_formatted)
+        emoji_in_signature_output = emoji.emojize(emoji_in_signature, variant="emoji_type")
         emoji_input_second = post_body_json['sound']
         emoji_count = int(post_body_json['count'])
-        message = (((emoji_output + " " + "says" + " " + "emoji_input_second" + "\n") * emoji_count) + "Made with" + " " + emoji_in_signature + "  " +
-        "by Ramzes" + "\n")
+        message = (((emoji_output + " " + "says" + " " + emoji_input_second + "\n") * emoji_count) + "Made with" + " " + emoji_in_signature_output + "  " + "by Ramzes" + "\n")
         self.send_response(200)
         self.send_header('Content-Type', 'text/json')
         self.end_headers()
