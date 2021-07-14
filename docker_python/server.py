@@ -21,7 +21,7 @@ class WebServerHandler(http.server.BaseHTTPRequestHandler):
         emoji_input_second = post_body_json['sound']
         emoji_count = int(post_body_json['count'])
         emoji_in_signature = '\u2764\ufe0f'
-        message = (((emoji_output + " " + "says" + " " + emoji_input_second + "\n") * emoji_count) + "Made with" + " " + emoji_in_signature + "  " + "by Ramzes" + "\n")
+        message = (((emoji_output + " " + "says" + " " + emoji_input_second + "\n") * emoji_count) + "Made with" + " " + emoji_in_signature + " " + "by Ramzes" + "\n")
         self.send_response(200)
         self.send_header('Content-Type', 'text/json')
         self.end_headers()

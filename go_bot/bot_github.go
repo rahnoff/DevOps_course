@@ -25,7 +25,7 @@ func main() {
 		return
 	}
 
-	log.Println("Starting GO bot\nSupported commands:\n/hello\n/Git\n/Tasks\n/TaskN, where N is 1-4\n")
+	log.Println("Starting GO bot\nSupported commands:\n/hello\n/Git\n/Tasks\n/TaskN, where N is 1-5\n")
 	bot.Handle("/hello", func(m *telegram.Message) {
 		bot.Send(m.Sender, "hello, this Go bot is online")
 	})
@@ -33,7 +33,7 @@ func main() {
 		bot.Send(m.Sender, "https://github.com/Therou/DevOps_course")
 	})
         bot.Handle("/Tasks", func(m *telegram.Message) {
-                bot.Send(m.Sender, "1 - ansible\n2 - scipt_first\n3 - script_second\n4 - Go Telegram bot")
+                bot.Send(m.Sender, "1 - Ansible\n2 - scipt_first\n3 - script_second\n4 - Go Telegram bot\n5 - Docker with Python")
 	})
         bot.Handle("/Task1", func(m *telegram.Message) {
 		bot.Send(m.Sender, "https://github.com/Therou/DevOps_course/tree/main/ansible")
@@ -46,6 +46,9 @@ func main() {
 	})
         bot.Handle("/Task4", func(m *telegram.Message) {
 		bot.Send(m.Sender, "https://github.com/Therou/DevOps_course/tree/main/go_bot")
+	})
+	bot.Handle("/Task5", func(m *telegram.Message) {
+		bot.Send(m.Sender, "https://github.com/Therou/DevOps_course/tree/main/docker_python")
 	})
 
 	bot.Start()

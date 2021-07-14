@@ -23,3 +23,8 @@
 - How to build a server in Python
 - About dictionaries in Python
 - About upx tool
+- Unix system calls
+- About ELF format
+- About LDAP
+- About the difference in usage between system calls and library functions
+- How to use Packer
