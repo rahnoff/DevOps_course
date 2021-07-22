@@ -28,3 +28,9 @@
 - About LDAP
 - About the difference in usage between system calls and library functions
 - How to use Packer
+- About diff
+- About permissions inheritance
+- About mount options
+- About AWS CLI
+- How to compile with make
+- About Groovy scripts for Jenkins

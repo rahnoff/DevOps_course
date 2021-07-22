@@ -1,0 +1,45 @@
+{
+	"variables": {
+		"region": "us-west-2",
+	        "aws_profile": "packertest",
+		"source_ami": "ami-0c7ea5497c02abcaf",
+		"instance_type": "t2.micro"
+	},
+	"builders": [
+		{
+			"type": "amazon-ebs",
+		        "profile": "{{user `aws_profile`}}",
+			"region": "{{user `region`}}",
+			"instance_type": "{{user `instance_type`}}",
+			"source_ami": "{{user `source_ami`}}",
+			"ssh_username": "admin",
+			"ami_name": "jenkins-main-debian",
+			"ami_description": "Debian Image with Jenkins Server",
+			"run_tags": {
+				"Name": "packer-builder"
+			}
+		}
+	],
+	"provisioners": [
+		{
+			"type": "file",
+			"source": "./scripts",
+			"destination": "/tmp"
+		},
+		{
+			"type": "file",
+			"source": "./config",
+			"destination": "/tmp"
+		},
+		{
+			"type": "file",
+			"source": "../.ssh/id_rsa",
+			"destination": "/tmp/id_rsa"
+		},
+		{
+			"type": "shell",
+			"script": "./setup_debian.sh",
+			"execute_command": "sudo -E -S sh '{{ .Path }}'"
+		}
+	]
+}
