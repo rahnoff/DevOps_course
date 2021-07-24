@@ -10,18 +10,19 @@ apt install -y jenkins
 systemctl enable jenkins
 
 apt install -y git
+
 mkdir /var/lib/jenkins/.ssh
 touch /var/lib/jenkins/.ssh/known_hosts
+mv /tmp/id_rsa /var/lib/jenkins/.ssh
 chown -R jenkins:jenkins /var/lib/jenkins/.ssh
 chmod 700 /var/lib/jenkins/.ssh
-mv /tmp/id_rsa /var/lib/jenkins/.ssh/id_rsa
 chmod 600 /var/lib/jenkins/.ssh/id_rsa
-chown -R jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa
 
-mkdir -p /var/lib/jenkins/init.groovy.d
-mv /tmp/scripts/*.groovy /var/lib/jenkins/init.groovy.d/
-chown jenkins:jenkins /var/lib/jenkins/init.groovy.d
-chown jenkins:jenkins /var/lib/jenkins/init.groovy.d/*
-chmod +x /tmp/config/install-plugins.sh
-bash /tmp/config/install-plugins.sh
+mkdir /var/lib/jenkins/init.groovy.d
+mv /tmp/*.groovy /var/lib/jenkins/init.groovy.d/
+chown -R jenkins:jenkins /var/lib/jenkins/init.groovy.d
+rm -r /var/lib/jenkins/plugins
+chmod +x /tmp/install-plugins.sh
+bash /tmp/install-plugins.sh
+chown -R jenkins:jenkins /var/lib/jenkins
 systemctl restart jenkins

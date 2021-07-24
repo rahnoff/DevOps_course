@@ -23,18 +23,48 @@
 	"provisioners": [
 		{
 			"type": "file",
-			"source": "./scripts",
-			"destination": "/tmp"
+			"source": "./scripts/basic-security.groovy",
+			"destination": "/tmp/"
 		},
 		{
 			"type": "file",
-			"source": "./config",
-			"destination": "/tmp"
+			"source": "./scripts/csrf-protection.groovy",
+			"destination": "/tmp/"
+		},
+		{
+			"type": "file",
+			"source": "./scripts/disable-cli.groovy",
+			"destination": "/tmp/"
+		},
+		{
+			"type": "file",
+			"source": "./scripts/disable-jnlp.groovy",
+			"destination": "/tmp/"
+		},
+		{
+			"type": "file",
+			"source": "./scripts/node-agent.groovy",
+			"destination": "/tmp/"
+		},
+		{
+			"type": "file",
+			"source": "./scripts/skip-jenkins-setup.groovy",
+			"destination": "/tmp/"
+		},
+		{
+			"type": "file",
+			"source": "./config/install-plugins.sh",
+			"destination": "/tmp/"
+		},
+		{
+			"type": "file",
+			"source": "./config/plugins.txt",
+			"destination": "/tmp/"
 		},
 		{
 			"type": "file",
 			"source": "../.ssh/id_rsa",
-			"destination": "/tmp/id_rsa"
+			"destination": "/tmp/"
 		},
 		{
 			"type": "shell",

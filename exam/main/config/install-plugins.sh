@@ -5,7 +5,7 @@ set -e
 plugin_dir=/var/lib/jenkins/plugins
 file_owner=jenkins.jenkins
 
-mkdir -p /var/lib/jenkins/plugins
+mkdir /var/lib/jenkins/plugins
 
 installPlugin() {
   if [ -f ${plugin_dir}/${1}.hpi -o -f ${plugin_dir}/${1}.jpi ]; then
@@ -24,7 +24,7 @@ installPlugin() {
 while read -r plugin
 do
     installPlugin "$plugin"
-done < "/tmp/config/plugins.txt"
+done < "/tmp/plugins.txt"
 
 changed=1
 maxloops=100
@@ -50,6 +50,6 @@ done
 
 echo "fixing permissions"
 
-chown ${file_owner} ${plugin_dir} -R
+chown -R ${file_owner} ${plugin_dir}
 
 echo "all done"
