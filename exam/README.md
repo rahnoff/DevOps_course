@@ -15,6 +15,6 @@ I use **Packer** to bake images for Jenkins main and agent instances based on Am
 
 **Jenkins** builds images and pushes them to the Docker Hub Registry<br />
 
-Python app https://github.com/Therou/python_hello_world<br />
+Python app https://github.com/Therou/python_hello_world/tree/develop<br />
 
-.NET Core app https://github.com/Therou/netcore_hello_world<br />
+.NET Core app https://github.com/Therou/netcore_hello_world/tree/develop<br />
