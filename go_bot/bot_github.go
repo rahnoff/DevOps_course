@@ -25,7 +25,7 @@ func main() {
 		return
 	}
 
-	log.Println("Starting GO bot\nSupported commands:\n/hello\n/Git\n/Tasks\n/TaskN, where N is 1-5\n")
+	log.Println("Starting GO bot\nSupported commands:\n/hello\n/Git\n/Tasks\n/TaskN, where N is 1-5, _exam\n")
 	bot.Handle("/hello", func(m *telegram.Message) {
 		bot.Send(m.Sender, "hello, this Go bot is online")
 	})
@@ -50,6 +50,10 @@ func main() {
 	bot.Handle("/Task5", func(m *telegram.Message) {
 		bot.Send(m.Sender, "https://github.com/Therou/DevOps_course/tree/main/docker_python")
 	})
+        bot.Handle("/Task_exam", func(m *telegram.Message) {
+		bot.Send(m.Sender, "https://github.com/Therou/DevOps_course/tree/main/exam")
+	})
+
 
 	bot.Start()
 }
